@@ -1,0 +1,13 @@
+version: '3.7'
+
+networks:
+  intranet:
+    name: intranet
+    external: true
+    driver: bridge
+
+include:
+  - path: portainer/docker-compose.yaml
+  - path: nextcloud/docker-compose.yaml
+  - path: photoprism/docker-compose.yaml
+  - path: immich/docker-compose.yaml

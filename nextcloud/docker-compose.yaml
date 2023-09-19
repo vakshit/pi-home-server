@@ -1,0 +1,48 @@
+version: '3.7'
+
+services:
+  mariadb-nextcloud:
+    image: mariadb:11.1.2
+    container_name: nextcloud-db
+    restart: always
+    networks:
+      - intranet
+    volumes:
+      - /mnt/hdd/deployments/databases/nextcloud:/var/lib/mysql
+    env_file:
+      - mariadb.env
+    
+  redis-nextcloud:
+    image: redis:7.2.1-alpine3.18
+    container_name: nextcloud-redis
+    restart: always
+    networks:
+      - intranet
+    volumes:
+      - /mnt/hdd/deployments/databases/redis-nextcloud:/data
+    
+
+  nextcloud:
+    image: nextcloud:27
+    container_name: nextcloud
+    depends_on:
+      - redis-nextcloud
+      - mariadb-nextcloud
+    networks:
+      - intranet
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - /mnt/hdd/deployments/nextcloud/html:/var/www/html 
+      - /mnt/hdd/deployments/nextcloud/apps:/var/www/html/custom_apps 
+      - /mnt/hdd/deployments/nextcloud/config:/var/www/html/config 
+      - /mnt/hdd/deployments/nextcloud/data:/var/www/html/data 
+      - /mnt/hdd/deployments/nextcloud/theme:/var/www/html/themes
+    env_file:
+      - nextcloud.env
+
+
+volumes:
+  nextcloud-db:
+  nextcloud-redis:
