@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.7"
 
 services:
   immich-redis:
@@ -14,7 +14,7 @@ services:
     networks:
       - intranet
     env_file:
-      - immich.env
+      - .env
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_USER: ${POSTGRES_USERNAME}
@@ -43,7 +43,7 @@ services:
     volumes:
       - ${IMMICH_DATABASE_BASE_PATH}/model_cache:/cache
     env_file:
-      - immich.env
+      - .env
     restart: always
     
   immich-server:
@@ -55,7 +55,7 @@ services:
     volumes:
       - ${UPLOAD_LOCATION}:/usr/src/app/upload
     env_file:
-      - immich.env
+      - .env
     environment:
       - DB_PASSWORD=${POSTGRES_PASSWORD}
       - DB_HOSTNAME=${POSTGRES_HOSTNAME}
@@ -79,7 +79,7 @@ services:
     volumes:
       - ${UPLOAD_LOCATION}:/usr/src/app/upload
     env_file:
-      - immich.env
+      - .env
     environment:
       - DB_PASSWORD=${POSTGRES_PASSWORD}
       - DB_HOSTNAME=${POSTGRES_HOSTNAME}
@@ -98,7 +98,7 @@ services:
     networks:
       - intranet
     env_file:
-      - immich.env
+      - .env
     restart: always
 
   immich-proxy:
