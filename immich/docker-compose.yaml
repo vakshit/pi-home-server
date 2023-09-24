@@ -110,8 +110,11 @@ services:
       # Make sure these values get passed through from the env file
       - IMMICH_SERVER_URL
       - IMMICH_WEB_URL
-    ports:
-      - 2283:8080
+      - VIRTUAL_HOST=photos.pi4.local
+      - VIRTUAL_PORT=8080
+    # ports:
+    #   - 2283:8080
+    
     depends_on:
       - immich-server
       - immich-web

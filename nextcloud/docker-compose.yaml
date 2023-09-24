@@ -31,8 +31,11 @@ services:
     networks:
       - intranet
     restart: always
-    ports:
-      - 8080:80
+    # ports:
+    #   - 8080:80
+    environment:
+      - VIRTUAL_HOST=nextcloud.pi4.local
+      - VIRTUAL_PORT=80
     volumes:
       - /mnt/hdd/deployments/nextcloud/html:/var/www/html 
       - /mnt/hdd/deployments/nextcloud/apps:/var/www/html/custom_apps 

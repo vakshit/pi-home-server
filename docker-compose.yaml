@@ -11,3 +11,4 @@ include:
   - path: nextcloud/docker-compose.yaml
   - path: photoprism/docker-compose.yaml
   - path: immich/docker-compose.yaml
+  - path: nginx-proxy/docker-compose.yaml

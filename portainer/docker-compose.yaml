@@ -16,11 +16,10 @@ services:
     command: -H unix:///var/run/docker.sock
     restart: always
     environment:
-      - VIRTUAL_HOST=portainer.example.com
-      - VIRTUAL_PORT=8000
-    ports:
-      - 8000:8000
-      - 9000:9000
+      - VIRTUAL_HOST=portainer.pi4.local
+      - VIRTUAL_PORT=9000
+    # ports:
+    #   - 9000:9000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /mnt/hdd/deployments/portainer:/data

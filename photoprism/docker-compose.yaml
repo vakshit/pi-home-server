@@ -2,7 +2,7 @@ version: '3.7'
 
 
 services:
- 
+
   mariadb-photoprism:
     image: mariadb:11.1.2
     container_name: mariadb-photoprism
@@ -22,7 +22,6 @@ services:
   photoprism:
     image: photoprism/photoprism:arm64
     container_name: photoprism
-    ## https://docs.photoprism.app/getting-started/troubleshooting/#fatal-server-errors
     restart: always
     stop_grace_period: 10s
     depends_on:
@@ -32,8 +31,11 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
-    ports:
-      - "2342:2342" # HTTP port (host:container)
+    # ports:
+    #   - "2342:2342" 
+    environment:
+      - VIRTUAL_HOST=photoprism.pi4.local
+      - VIRTUAL_PORT=2342
     env_file:
       - photoprism/credentials.env
       - photoprism/database.env
