@@ -16,7 +16,7 @@ services:
     command: -H unix:///var/run/docker.sock
     restart: always
     environment:
-      - VIRTUAL_HOST=portainer.pi4.local
+      - VIRTUAL_HOST=portainer.pi4.local,172.24.65.30
       - VIRTUAL_PORT=9000
     # ports:
     #   - 9000:9000

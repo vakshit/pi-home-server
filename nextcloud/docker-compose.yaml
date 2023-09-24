@@ -32,7 +32,7 @@ services:
       - intranet
     restart: always
     # ports:
-    #   - 8080:80
+    #   - 8000:80
     environment:
       - VIRTUAL_HOST=nextcloud.pi4.local
       - VIRTUAL_PORT=80
