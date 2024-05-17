@@ -3,3 +3,7 @@
 
 ansible/password
 .vscode
+
+
+immich/library
+immich/postgres
