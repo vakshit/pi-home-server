@@ -24,6 +24,8 @@ services:
     depends_on:
       - immich-redis
       - immich-database
+    networks:
+      - intranet
     restart: always
 
   immich-microservices:
@@ -42,6 +44,8 @@ services:
     depends_on:
       - immich-redis
       - immich-database
+    networks:
+      - intranet
     restart: always
 
   immich-machine-learning:
@@ -56,11 +60,15 @@ services:
       - model-cache:/cache
     env_file:
       - .env
+    networks:
+      - intranet
     restart: always
 
   immich-redis:
     container_name: immich_redis
     image: registry.hub.docker.com/library/redis:6.2-alpine@sha256:84882e87b54734154586e5f8abd4dce69fe7311315e2fc6d67c29614c8de2672
+    networks:
+      - intranet
     restart: always
 
   immich-database:
@@ -73,6 +81,8 @@ services:
       POSTGRES_INITDB_ARGS: '--data-checksums'
     volumes:
       - ${DB_DATA_LOCATION}:/var/lib/postgresql/data
+    networks:
+      - intranet
     restart: always
     command: ["postgres", "-c" ,"shared_preload_libraries=vectors.so", "-c", 'search_path="$$user", public, vectors', "-c", "logging_collector=on", "-c", "max_wal_size=2GB", "-c", "shared_buffers=512MB", "-c", "wal_compression=on"]
 
