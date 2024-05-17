@@ -22,8 +22,8 @@ services:
     ports:
       - 2283:3001
     depends_on:
-      - redis
-      - database
+      - immich-redis
+      - immich-database
     restart: always
 
   immich-microservices:
@@ -40,8 +40,8 @@ services:
     env_file:
       - .env
     depends_on:
-      - redis
-      - database
+      - immich-redis
+      - immich-database
     restart: always
 
   immich-machine-learning:
@@ -58,12 +58,12 @@ services:
       - .env
     restart: always
 
-  redis:
+  immich-redis:
     container_name: immich_redis
     image: registry.hub.docker.com/library/redis:6.2-alpine@sha256:84882e87b54734154586e5f8abd4dce69fe7311315e2fc6d67c29614c8de2672
     restart: always
 
-  database:
+  immich-database:
     container_name: immich_postgres
     image: registry.hub.docker.com/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0
     environment:
