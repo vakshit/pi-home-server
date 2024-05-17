@@ -11,12 +11,12 @@ services:
   #     - "/var/run/docker.sock:/tmp/docker.sock:ro"
 
   portainer:
-    image: portainer/portainer-ce:linux-arm64-2.19.0
+    image: portainer/portainer-ce:linux-arm64-2.20.2
     container_name: portainer
     command: -H unix:///var/run/docker.sock
     restart: always
     environment:
-      - VIRTUAL_HOST=portainer.pi4.local,172.24.65.30
+      - VIRTUAL_HOST=portainer.home.local
       - VIRTUAL_PORT=9000
     # ports:
     #   - 9000:9000

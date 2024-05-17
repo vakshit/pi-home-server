@@ -1,3 +1,5 @@
 **/credentials.env
 **/certs
 
+ansible/password
+.vscode
