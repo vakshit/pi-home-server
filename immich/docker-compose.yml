@@ -16,7 +16,8 @@ services:
     volumes:
       - ${UPLOAD_LOCATION}:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro
-      - ${EXTERNAL_PATH}:/usr/src/app/external
+      - ${ARCHIVE_PATH}:/usr/src/app/external/archive
+      - ${ALBUM_PATH}:/usr/src/app/external/albums
     env_file:
       - .env
     ports:
@@ -38,7 +39,8 @@ services:
     volumes:
       - ${UPLOAD_LOCATION}:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro
-      - ${EXTERNAL_PATH}:/usr/src/app/external
+      - ${ARCHIVE_PATH}:/usr/src/app/external/archive
+      - ${ALBUM_PATH}:/usr/src/app/external/albums
     env_file:
       - .env
     depends_on:

@@ -10,7 +10,7 @@ services:
     volumes:
       - /mnt/hdd/deployments/databases/nextcloud:/var/lib/mysql
     env_file:
-      - mariadb.env
+      - .env
     
   redis-nextcloud:
     image: redis:7.2.1-alpine3.18
@@ -43,7 +43,7 @@ services:
       - /mnt/hdd/deployments/nextcloud/data:/var/www/html/data 
       - /mnt/hdd/deployments/nextcloud/theme:/var/www/html/themes
     env_file:
-      - nextcloud.env
+      - .env
 
 
 volumes:
