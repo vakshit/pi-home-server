@@ -1,51 +1,43 @@
 name: nextcloud
 
 services:
-  mariadb-nextcloud:
-    image: mariadb:11.1.2
-    container_name: nextcloud-db
+  nextcloud-mariadb:
+    image: mariadb:11.4.1-rc
+    container_name: nextcloud-mariadb
+    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
     restart: always
     networks:
       - intranet
     volumes:
-      - /mnt/hdd/deployments/databases/nextcloud:/var/lib/mysql
+      - ${DB_DATA_LOCATION}:/var/lib/mysql
     env_file:
       - .env
-    
-  redis-nextcloud:
-    image: redis:7.2.1-alpine3.18
+
+  nextcloud-redis:
+    image: redis:7.2.5-alpine
     container_name: nextcloud-redis
     restart: always
     networks:
       - intranet
-    volumes:
-      - /mnt/hdd/deployments/databases/redis-nextcloud:/data
-    
+    # volumes:
+    #   - /media/akshit/seagate/app-data/nextcloud/redis:/data
 
   nextcloud:
-    image: nextcloud:27
+    image: nextcloud:29.0.0-fpm
     container_name: nextcloud
     depends_on:
-      - redis-nextcloud
-      - mariadb-nextcloud
+      - nextcloud-redis
+      - nextcloud-mariadb
     networks:
       - intranet
     restart: always
-    # ports:
-    #   - 8000:80
+    ports:
+      - 9000:9000
     environment:
       - VIRTUAL_HOST=nextcloud.pi4.local
       - VIRTUAL_PORT=80
     volumes:
-      - /mnt/hdd/deployments/nextcloud/html:/var/www/html 
-      - /mnt/hdd/deployments/nextcloud/apps:/var/www/html/custom_apps 
-      - /mnt/hdd/deployments/nextcloud/config:/var/www/html/config 
-      - /mnt/hdd/deployments/nextcloud/data:/var/www/html/data 
-      - /mnt/hdd/deployments/nextcloud/theme:/var/www/html/themes
+      - ${HTML_LOCATION}:/var/www/html:z
+      - ${DATA_LOCATION}:/var/www/html/data:z
     env_file:
       - .env
-
-
-volumes:
-  nextcloud-db:
-  nextcloud-redis:
