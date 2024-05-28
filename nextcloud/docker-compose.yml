@@ -31,8 +31,8 @@ services:
     networks:
       - intranet
     restart: always
-    ports:
-      - 9000:9000
+    # ports:
+    #   - 9000:9000
     environment:
       - VIRTUAL_HOST=nextcloud.pi4.local
       - VIRTUAL_PORT=80

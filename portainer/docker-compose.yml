@@ -2,15 +2,15 @@ name: portainer
 
 services:
   portainer:
-    image: portainer/portainer-ce:linux-arm64-2.20.2
+    image: portainer/portainer-ce:linux-arm64-2.20.3
     container_name: portainer
     command: -H unix:///var/run/docker.sock
     restart: always
     environment:
       - VIRTUAL_HOST=portainer.home.local
       - VIRTUAL_PORT=9000
-    # ports:
-    #   - 9000:9000
+    ports:
+      - 9443:9443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /mnt/hdd/deployments/portainer:/data

@@ -7,7 +7,7 @@ networks:
     driver: bridge
 
 include:
-  # - path: portainer/docker-compose.yml
+  - path: portainer/docker-compose.yml
   - path: nextcloud/docker-compose.yml
   # - path: photoprism/docker-compose.yml
   - path: immich/docker-compose.yml
