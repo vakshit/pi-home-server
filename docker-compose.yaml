@@ -9,6 +9,6 @@ networks:
 include:
   - path: portainer/docker-compose.yml
   - path: nextcloud/docker-compose.yml
-  # - path: photoprism/docker-compose.yml
   - path: immich/docker-compose.yml
   - path: nginx/docker-compose.yml
+  - path: pvt-immich/docker-compose.yml
