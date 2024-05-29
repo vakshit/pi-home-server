@@ -22,3 +22,14 @@ services:
       - ${NC_DATA_LOCATION}:/var/www/html/data:z,ro
     env_file:
       - .env
+
+  # certbot:
+  #   image: certbot/certbot
+  #   container_name: certbot
+  #   restart: always
+  #   networks: 
+  #     - intranet
+  #   volumes:
+  #     - ./letsencrypt:/etc/letsencrypt
+  #     - ./certs:/etc/letsencrypt/live
+  #   entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
