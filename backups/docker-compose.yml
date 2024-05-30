@@ -12,5 +12,6 @@ services:
       - intranet
     volumes:
       - ${BACKUP_LOCATION}:/backups
+      - /var/run/docker.sock:/var/run/docker.sock
     env_file:
       - .env

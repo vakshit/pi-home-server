@@ -1,6 +1,6 @@
 FROM python:3.10.14-alpine3.20
 
-# RUN apk add --no-cache bash curl 
+RUN apk add --no-cache bash docker-cli
 
 WORKDIR /app
 
