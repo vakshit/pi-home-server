@@ -12,3 +12,4 @@ include:
   - path: immich/docker-compose.yml
   - path: nginx/docker-compose.yml
   - path: pvt-immich/docker-compose.yml
+  - path: backups/docker-compose.yml

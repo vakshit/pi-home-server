@@ -13,10 +13,3 @@
         enabled: yes
         state: restarted
         daemon_reload: yes
-
-  handlers:
-    - name: Restart nginx
-      systemd:
-        name: nginx
-        state: restarted
-        enabled: yes

@@ -1,0 +1,16 @@
+name: backup
+
+services:
+  backup:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: backup:latest
+    container_name: backup
+    restart: always
+    networks:
+      - intranet
+    volumes:
+      - ${BACKUP_LOCATION}:/backups
+    env_file:
+      - .env
