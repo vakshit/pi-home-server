@@ -13,3 +13,4 @@ include:
   - path: nginx/docker-compose.yml
   - path: pvt-immich/docker-compose.yml
   - path: backups/docker-compose.yml
+  - path: jellyfin/docker-compose.yml
