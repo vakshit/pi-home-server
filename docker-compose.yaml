@@ -7,10 +7,11 @@ networks:
     driver: bridge
 
 include:
-  - path: portainer/docker-compose.yml
-  - path: nextcloud/docker-compose.yml
-  - path: immich/docker-compose.yml
-  - path: nginx/docker-compose.yml
-  - path: pvt-immich/docker-compose.yml
-  - path: backups/docker-compose.yml
-  - path: jellyfin/docker-compose.yml
+  - path: portainer/docker-compose.yml    # 5000
+  - path: nextcloud/docker-compose.yml    # 5001
+  - path: immich/docker-compose.yml       # 5002
+  - path: backups/docker-compose.yml      # 5003
+  - path: jellyfin/docker-compose.yml     # 5004
+  - path: pvt-immich/docker-compose.yml   # 6000
+  - path: nginx/docker-compose.yml 
+  - path: cloudflared/docker-compose.yml

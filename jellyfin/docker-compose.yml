@@ -12,6 +12,8 @@ services:
       - intranet
     env_file:
       - .env
+    ports:
+      - 8096:8096
     # environment:
     #   - JELLYFIN_PublishedServerUrl=http://examp
     # # Optional - may be necessary for docker healthcheck to pass if running in host network mode

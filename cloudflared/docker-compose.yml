@@ -1,0 +1,12 @@
+name: cloudflared
+
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:2024.6.1
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARED_TOKEN}
+    networks:
+      - intranet
+    restart: unless-stopped
+    env_file:
+      - .env
+
