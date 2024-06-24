@@ -3,7 +3,8 @@ name: cloudflared
 services:
   cloudflared:
     image: cloudflare/cloudflared:2024.6.1
-    command: tunnel --no-autoupdate run --token ${CLOUDFLARED_TOKEN}
+    command: tunnel --loglevel error --no-autoupdate run --token ${CLOUDFLARED_TOKEN}
+    container_name: cloudflared
     networks:
       - intranet
     restart: unless-stopped
