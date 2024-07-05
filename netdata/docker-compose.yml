@@ -5,7 +5,7 @@ services:
     image: netdata/netdata:stable
     container_name: netdata
     pid: host
-    network_mode: host
+    # network_mode: host
     restart: unless-stopped
     cap_add:
       - SYS_PTRACE
@@ -24,8 +24,11 @@ services:
       - /etc/os-release:/host/etc/os-release:ro
       - /var/log:/host/var/log:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./netdata.conf:/etc/netdata/netdata.conf
     env_file:
       - .env
+    networks:
+      - intranet
 volumes:
   netdataconfig:
   netdatalib:

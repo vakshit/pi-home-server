@@ -17,6 +17,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${ARCHIVE_PATH}:/usr/src/app/external/archive
       - ${ALBUM_PATH}:/usr/src/app/external/albums
+      - ${ALBUM_AKSHIT_PATH}:/usr/src/app/external/albums_akshit
     env_file:
       - .env
     ports:
