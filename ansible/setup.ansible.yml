@@ -1,15 +1,26 @@
 ---
 - name: Setup Ubuntu Server
-  hosts: homeServer
-  become: yes
+  hosts:
+    # - pi5
+    - pi4-1
+  become: true
 
   tasks:
-    - name: Add Docker repository and install Docker
-      include_tasks: docker.ansible.yml
+    - name: Install Basic Applications
+      ansible.builtin.apt:
+        name:
+          - net-tools
+          - htop
+          - tree
+        state: present
+        update_cache: true
 
-    - name: Enable docker service
-      systemd:
+    - name: "Add Docker repository and install Docker"
+      ansible.builtin.include_tasks: docker.ansible.yml
+
+    - name: "Enable docker service"
+      ansible.builtin.systemd:
         name: docker
-        enabled: yes
+        enabled: true
         state: restarted
-        daemon_reload: yes
+        daemon_reload: true
