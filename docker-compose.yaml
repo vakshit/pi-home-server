@@ -16,3 +16,5 @@ include:
   - path: nginx/docker-compose.yml 
   - path: cloudflared/docker-compose.yml
   - path: netdata/docker-compose.yml
+  - path: immich-album-creator/docker-compose.yml
+  
