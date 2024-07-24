@@ -5,13 +5,13 @@ ansible/password
 .vscode
 
 
-immich/library
-immich/postgres
+services/immich/library
+services/immich/postgres
 
-backups/*.json
-backups/*.env
+core/backups/*.json
+core/backups/*.env
 
-cloudflared/.env
-netdata/.env
+core/cloudflared/.env
+core/netdata/.env
 
-immich-album-creator/.env
+core/immich-album-creator/.env

@@ -1,0 +1,15 @@
+name: core
+
+networks:
+  intranet:
+    name: intranet
+    external: true
+    driver: bridge
+
+include:
+  - path: portainer/docker-compose.yml    # 5000
+  - path: backups/docker-compose.yml      # 5003
+  - path: cloudflared/docker-compose.yml
+  - path: netdata/docker-compose.yml
+  - path: immich-album-creator/docker-compose.yml
+  

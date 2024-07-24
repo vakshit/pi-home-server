@@ -1,4 +1,4 @@
-name: server 
+name: server
 
 networks:
   intranet:
@@ -7,14 +7,6 @@ networks:
     driver: bridge
 
 include:
-  - path: portainer/docker-compose.yml    # 5000
-  - path: nextcloud/docker-compose.yml    # 5001
-  - path: immich/docker-compose.yml       # 5002
-  - path: backups/docker-compose.yml      # 5003
-  - path: jellyfin/docker-compose.yml     # 5004
-  - path: pvt-immich/docker-compose.yml   # 6000
-  - path: nginx/docker-compose.yml 
-  - path: cloudflared/docker-compose.yml
-  - path: netdata/docker-compose.yml
-  - path: immich-album-creator/docker-compose.yml
+  - path: core/docker-compose.yml
+  - path: services/docker-compose.yml
   

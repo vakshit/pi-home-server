@@ -1,0 +1,15 @@
+name: services
+
+networks:
+  intranet:
+    name: intranet
+    external: true
+    driver: bridge
+
+include:
+  - path: nextcloud/docker-compose.yml    # 5001
+  - path: immich/docker-compose.yml       # 5002
+  - path: jellyfin/docker-compose.yml     # 5004
+  - path: pvt-immich/docker-compose.yml   # 6000
+  - path: nginx/docker-compose.yml 
+  
