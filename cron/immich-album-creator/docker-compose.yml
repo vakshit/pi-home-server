@@ -1,5 +1,9 @@
 name: album-creator
 
+include:
+  - path: ../../services/immich/docker-compose.yml
+  - path: ../../services/pvt-immich/docker-compose.yml
+
 services:
   immich-album-creator-akshit-album:
     image: salvoxia/immich-folder-album-creator:latest

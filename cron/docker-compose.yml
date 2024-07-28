@@ -1,0 +1,12 @@
+name: cron
+
+networks:
+  intranet:
+    name: intranet
+    external: true
+    driver: bridge
+
+include:
+  - path: backups/docker-compose.yml
+  - path: immich-album-creator/docker-compose.yml
+  

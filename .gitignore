@@ -1,17 +1,19 @@
 **/credentials.env
-**/certs
 
 ansible/password
 .vscode
 
-
+# Services
 services/immich/library
 services/immich/postgres
 
-core/backups/*.json
-core/backups/*.env
-
+# Core
 core/cloudflared/.env
 core/netdata/.env
+**/certs
 
-core/immich-album-creator/.env
+# Cron
+cron/immich-album-creator/.env
+cron/backups/*.json
+cron/backups/*.env
+**/*.log

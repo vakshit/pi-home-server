@@ -1,5 +1,8 @@
 name: nginx
 
+include:
+  - path: ../../services/nextcloud/docker-compose.yml
+
 services:
   nginx:
     image: nginx:1.26.0-alpine

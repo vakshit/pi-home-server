@@ -9,4 +9,4 @@ docker exec -u www-data nextcloud bash -c "php occ maintenance:mode --off" > /de
 
 python upload_db.py /backups/immich.sql.gz /backups/pvt-immich.sql.gz /backups/nextcloud-mariadb.bak
 
-echo echo "Backup complete for $(date '+%d-%m-%Y')"
+echo "Backup complete for $(date '+%d-%m-%Y')" > /backups.log
