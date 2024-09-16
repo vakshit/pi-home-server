@@ -1,4 +1,8 @@
-name: nextcloud
+name: server
+
+include:
+  - path: ../../core/network.yaml
+
 
 services:
   nextcloud-mariadb:

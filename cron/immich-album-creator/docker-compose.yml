@@ -1,8 +1,16 @@
-name: album-creator
+name: server
 
 include:
+  - path: ../../core/network.yaml
   - path: ../../services/immich/docker-compose.yml
   - path: ../../services/pvt-immich/docker-compose.yml
+
+networks:
+  intranet:
+    name: intranet
+    external: true
+    driver: bridge
+
 
 services:
   immich-album-creator-akshit-album:
@@ -20,6 +28,8 @@ services:
       API_KEY: ${AKSHIT_API_KEY}
       ROOT_PATH: /usr/src/app/external/albums_akshit
       CRON_EXPRESSION: "0 2 * * *"
+      MODE: "CREATE"
+      UNATTENDED: 1
     entrypoint: /script/immich_auto_album.sh
 
   immich-album-creator-home-album:
@@ -37,6 +47,8 @@ services:
       API_KEY: ${HOME_API_KEY}
       ROOT_PATH: /usr/src/app/external/albums
       CRON_EXPRESSION: "5 2 * * *"
+      MODE: "CREATE"
+      UNATTENDED: 1
     entrypoint: /script/immich_auto_album.sh
   
   immich-album-creator-akshit-pvt-album:
@@ -54,4 +66,6 @@ services:
       API_KEY: ${AKSHIT_PVT_API_KEY}
       ROOT_PATH: /usr/src/app/external/albums
       CRON_EXPRESSION: "10 2 * * *"
+      MODE: "CREATE"
+      UNATTENDED: 1
     entrypoint: /script/immich_auto_album.sh

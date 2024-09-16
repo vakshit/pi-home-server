@@ -6,7 +6,11 @@
 # The compose file on main may not be compatible with the latest release.
 #
 
-name: pvt-immich
+name: server
+
+include:
+  - path: ../../core/network.yaml
+
 
 services:
   pvt-immich-server:

@@ -1,6 +1,7 @@
-name: nginx
+name: server
 
 include:
+  - path: ../network.yaml
   - path: ../../services/nextcloud/docker-compose.yml
 
 services:

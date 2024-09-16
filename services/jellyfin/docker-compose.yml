@@ -1,4 +1,8 @@
-name: jellyfin
+name: server
+
+include:
+  - path: ../../core/network.yaml
+
 
 services:
   jellyfin:

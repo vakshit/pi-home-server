@@ -1,11 +1,5 @@
 name: server
 
-networks:
-  intranet:
-    name: intranet
-    external: true
-    driver: bridge
-
 include:
   - path: core/docker-compose.yml
   - path: services/docker-compose.yml

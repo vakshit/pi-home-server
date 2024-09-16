@@ -1,4 +1,7 @@
-name: backup
+name: server
+
+include:
+  - path: ../../core/network.yaml
 
 services:
   backup:

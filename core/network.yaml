@@ -1,0 +1,7 @@
+name: server
+
+networks:
+  intranet:
+    name: intranet
+    external: true
+    driver: bridge

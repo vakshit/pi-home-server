@@ -1,4 +1,7 @@
-name: portainer
+name: server
+
+include:
+  - path: ../network.yaml
 
 services:
   portainer:

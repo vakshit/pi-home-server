@@ -1,12 +1,7 @@
 name: server
 
-networks:
-  intranet:
-    name: intranet
-    external: true
-    driver: bridge
-
 include:
+  - path: network.yaml
   - path: portainer/docker-compose.yml    # 5000
   - path: cloudflared/docker-compose.yml
   - path: netdata/docker-compose.yml

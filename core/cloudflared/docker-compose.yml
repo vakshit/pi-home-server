@@ -1,4 +1,7 @@
-name: cloudflared
+name: server
+
+include:
+  - path: ../network.yaml
 
 services:
   cloudflared:
