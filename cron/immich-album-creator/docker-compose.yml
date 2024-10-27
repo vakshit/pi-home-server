@@ -5,13 +5,6 @@ include:
   - path: ../../services/immich/docker-compose.yml
   - path: ../../services/pvt-immich/docker-compose.yml
 
-networks:
-  intranet:
-    name: intranet
-    external: true
-    driver: bridge
-
-
 services:
   immich-album-creator-akshit-album:
     image: salvoxia/immich-folder-album-creator:latest
@@ -21,10 +14,10 @@ services:
     env_file:
       - .env
     restart: no
-    depends_on: 
+    depends_on:
       - immich-server
     environment:
-      API_URL: http://immich-server:3001/api/
+      API_URL: http://immich-server:2283/api/
       API_KEY: ${AKSHIT_API_KEY}
       ROOT_PATH: /usr/src/app/external/albums_akshit
       CRON_EXPRESSION: "0 2 * * *"
@@ -40,10 +33,10 @@ services:
     env_file:
       - .env
     restart: no
-    depends_on: 
+    depends_on:
       - immich-server
     environment:
-      API_URL: http://immich-server:3001/api/
+      API_URL: http://immich-server:2283/api/
       API_KEY: ${HOME_API_KEY}
       ROOT_PATH: /usr/src/app/external/albums
       CRON_EXPRESSION: "5 2 * * *"
@@ -59,10 +52,10 @@ services:
     env_file:
       - .env
     restart: no
-    depends_on: 
+    depends_on:
       - pvt-immich-server
     environment:
-      API_URL: http://pvt-immich-server:3001/api/
+      API_URL: http://pvt-immich-server:2283/api/
       API_KEY: ${AKSHIT_PVT_API_KEY}
       ROOT_PATH: /usr/src/app/external/albums
       CRON_EXPRESSION: "10 2 * * *"

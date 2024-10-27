@@ -5,7 +5,7 @@ update-immich-version:
 	docker system prune -af
 
 create-albums:
-	docker compose -f $HOME/pi-home-server/cron/docker-compose.yml up immich-album-creator-akshit-album immich-album-creator-home-album immich-album-creator-akshit-pvt-album
+	docker compose -f ${HOME}/pi-home-server/cron/docker-compose.yml up immich-album-creator-akshit-album immich-album-creator-home-album immich-album-creator-akshit-pvt-album
 
 sync_pvt_immich_data:
 	rsync -avztu --progress --delete --no-perms --no-owner --no-group /media/akshit/seagate/app-data/pvt-immich/ /media/akshit/onetouch/app-data/pvt-immich/
