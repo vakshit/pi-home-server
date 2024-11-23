@@ -21,6 +21,7 @@ services:
       - ${ARCHIVE_PATH}:/usr/src/app/external/archive
       - ${ALBUM_PATH}:/usr/src/app/external/albums
       - ${ALBUM_AKSHIT_PATH}:/usr/src/app/external/albums_akshit
+      - ${ALBUM_JIYA_PATH}:/usr/src/app/external/albums_jiya
     env_file:
       - .env
     ports:
