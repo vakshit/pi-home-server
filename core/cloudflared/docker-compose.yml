@@ -5,7 +5,7 @@ include:
 
 services:
   cloudflared:
-    image: cloudflare/cloudflared:2024.6.1
+    image: cloudflare/cloudflared:2024.12.2
     command: tunnel --loglevel error --no-autoupdate run --token ${CLOUDFLARED_TOKEN}
     container_name: cloudflared
     networks:
@@ -13,4 +13,3 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-

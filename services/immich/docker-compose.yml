@@ -7,17 +7,51 @@ services:
   immich-server:
     container_name: immich_server
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
-    volumes:
-      - ${UPLOAD_LOCATION}:/usr/src/app/upload
-      - /etc/localtime:/etc/localtime:ro
-      - ${ARCHIVE_PATH}:/usr/src/app/external/archive
-      - ${ALBUM_PATH}:/usr/src/app/external/albums
-      - ${ALBUM_AKSHIT_PATH}:/usr/src/app/external/albums_akshit
-      - ${ALBUM_JIYA_PATH}:/usr/src/app/external/albums_jiya
     env_file:
       - .env
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      # Upload path
+      - ${HOME_UPLOAD_LOCATION}:/usr/src/app/upload
+      # Album Path
+      - ${HOME_ARCHIVE_PATH}:/usr/src/app/external/archive
+      - ${HOME_ALBUM_PATH}:/usr/src/app/external/albums
+      - ${HOME_ALBUM_AKSHIT_PATH}:/usr/src/app/external/albums_akshit
+      - ${HOME_ALBUM_JIYA_PATH}:/usr/src/app/external/albums_jiya
+    environment:
+      DB_USERNAME: ${HOME_DB_USERNAME}
+      DB_DATABASE_NAME: ${HOME_DB_DATABASE_NAME}
+      DB_PASSWORD: ${HOME_DB_PASSWORD}
+      REDIS_DBINDEX: ${HOME_REDIS_DBINDEX}
     ports:
       - 2283:2283
+    depends_on:
+      - immich-redis
+      - immich-database
+    networks:
+      - intranet
+    restart: always
+    healthcheck:
+      disable: false
+
+  pvt-immich-server:
+    container_name: pvt_immich_server
+    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    env_file:
+      - .env
+    environment:
+      DB_USERNAME: ${PVT_DB_USERNAME}
+      DB_DATABASE_NAME: ${PVT_DB_DATABASE_NAME}
+      DB_PASSWORD: ${PVT_DB_PASSWORD}
+      REDIS_DBINDEX: ${PVT_REDIS_DBINDEX}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      # Upload Path
+      - ${PVT_UPLOAD_LOCATION}:/usr/src/app/upload
+      # Album Path
+      - ${PVT_ALBUM_PATH}:/usr/src/app/external/albums
+    ports:
+      - 2200:2283
     depends_on:
       - immich-redis
       - immich-database
@@ -57,12 +91,15 @@ services:
   immich-database:
     container_name: immich_postgres
     image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0
+    env_file:
+      - .env
     environment:
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_DB: ${DB_DATABASE_NAME}
+      POSTGRES_MULTIPLE_DATABASES: "${HOME_DB_DATABASE_NAME},${HOME_DB_USERNAME},${HOME_DB_PASSWORD}: ${PVT_DB_DATABASE_NAME},${PVT_DB_USERNAME},${PVT_DB_PASSWORD}"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
       POSTGRES_INITDB_ARGS: '--data-checksums'
     volumes:
+      - ./create-multiple-postgresql-databases.sh:/docker-entrypoint-initdb.d/create-multiple-postgresql-databases.sh
       - ${DB_DATA_LOCATION}:/var/lib/postgresql/data
     networks:
       - intranet
@@ -85,5 +122,6 @@ services:
       -c shared_buffers=512MB
       -c wal_compression=on
     restart: always
+
 volumes:
   model-cache:
