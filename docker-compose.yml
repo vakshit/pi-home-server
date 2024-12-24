@@ -3,4 +3,3 @@ name: server
 include:
   - path: core/docker-compose.yml
   - path: services/docker-compose.yml
-  

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Define source and destination directories
-SRC_DIR="$(echo $HOME)/Desktop/Immich"
-DEST_DIR="$(echo $HOME)/Desktop/Immich-AVIF"
+SRC_DIR="$(echo $HOME)/Desktop/server/jellyfin"
+DEST_DIR="$(echo $HOME)/Desktop/server/jellyfin-avif"
 UNSUPPORTED_LOG="logs/unsupported_files.log"
 FFMPEG_ERROR_LOG="logs/ffmpeg_errors.log"
 AVIFENC_ERROR_LOG="logs/avifenc_errors.log"
@@ -20,6 +20,38 @@ mkdir -p logs
 > "$AVIFENC_EXISTING_LOG"
 > "$FFMPEG_EXISTING_LOG"
 > "$HEVC_EXISTING_LOG"
+
+# Default options
+SKIP_IMAGES=false
+SKIP_VIDEOS=false
+SKIP_LEGACY_VIDEOS=false
+SKIP_UNSUPPORTED=false
+
+# Parse command-line arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --skip-images)
+            SKIP_IMAGES=true
+            shift
+            ;;
+        --skip-videos)
+            SKIP_VIDEOS=true
+            shift
+            ;;
+        --skip-legacy-videos)
+            SKIP_LEGACY_VIDEOS=true
+            shift
+            ;;
+        --skip-unsupported)
+            SKIP_UNSUPPORTED=true
+            shift
+            ;;
+        *)
+            echo "Unknown option: $1"
+            exit 1
+            ;;
+    esac
+done
 
 # Check if the destination directory exists, if not create it
 if [ ! -d "$DEST_DIR" ]; then
@@ -46,29 +78,35 @@ process_files() {
             local extension="${filename##*.}"
             extension=$(echo "$extension" | tr '[:upper:]' '[:lower:]') # Convert extension to lowercase
             local name="${filename%.*}" # Get the filename without extension
-            if [[ "$extension" == "jpg" || "$extension" == "jpeg" ]]; then
+            if [[ "$extension" == "jpg" || "$extension" == "jpeg" || $extension == "png" ]]; then
+                if $SKIP_IMAGES; then
+                    continue
+                fi
                 # Convert JPG/JPEG files to AVIF if it doesn't already exist
                 local avif_file="$dest/$name.avif"
                 output=$(avifenc -j 12 -c aom -q 50 --no-overwrite --min 10 --max 30 "$item" "$avif_file" 2>&1)
-                echo "$output"
-                if [ $? -ne 0 ]; then
+                if [[ $? != 0 || $? != "0" ]]; then
                     if echo "$output" | grep -q "no-overwrite"; then
                         echo "$item" >> "$AVIFENC_EXISTING_LOG"
                     elif echo "$output" | grep -q "XMP extraction failed"; then
                         echo "XMP extraction failed: removing XMP data from $item"
-                        output=$(avifenc -j 12 -c aom -q 50 --no-overwrite --ignore-xmp --min 10 --max 30 "$item" "$avif_file")
-                        if [ $? -ne 0 ]; then
+                        output=$(avifenc -j 12 -c aom -q 50 --no-overwrite --ignore-xmp --min 10 --max 30 "$item" "$avif_file" 2>&1)
+                        if [[ $? != 0 || $? != "0" ]]; then
                             echo "$item" >> "$AVIFENC_ERROR_LOG"
                         fi
                     else
                         echo "$item" >> "$AVIFENC_ERROR_LOG"
                     fi
                 fi
+                echo "$output"
 
-            elif [[ "$extension" == "mov" || "$extension" == "avi" || "$extension" == "mp4" || "$extension" == "mkv" || "$extension" == "wmv" || "$extension" == "dat" ]]; then
+            elif [[ "$extension" == "mov" || "$extension" == "mp4" || "$extension" == "mkv" || "$extension" == "wmv" || "$extension" == "dat" ]]; then
+                if $SKIP_VIDEOS; then
+                    continue
+                fi
                 # Check if the video is already HEVC
                 local hevc_file="$dest/$name.mp4"
-                if [ -f "$hevc_file" ]; then
+                if [[ -f "$hevc_file" ]] ; then
                     echo "$item" >> "$FFMPEG_EXISTING_LOG"
                 else
                     local codec=$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$item")
@@ -76,12 +114,28 @@ process_files() {
                         echo "$item" >> "$HEVC_EXISTING_LOG"
                         cp "$item" "$hevc_file"
                     else
-                        if ! ffmpeg -i "$item" -c:v libx265 -preset medium -crf 28 -c:a copy "$hevc_file"; then
+                        if ! ffmpeg -i "$item" -c:v libx265 -preset slow -crf 28 -c:a copy "$hevc_file"; then
                             echo "$item" >> "$FFMPEG_ERROR_LOG"
                         fi
                     fi
                 fi
+            elif [[ "$extension" == "avi" || "$extension" == "3gp" ]]; then
+                if $SKIP_LEGACY_VIDEOS; then
+                    continue
+                fi
+                local hevc_file="$dest/$name.mp4"
+                rm "$hevc_file"
+                if [[ -f "$hevc_file" ]] ; then
+                    echo "$item" >> "$FFMPEG_EXISTING_LOG"
+                else
+                    if ! ffmpeg -i "$item" -c:v libx265 -preset medium -crf 28 -c:a aac -b:a 128k "$hevc_file"; then
+                        echo "$item" >> "$FFMPEG_ERROR_LOG"
+                    fi
+                fi
             else
+                if $SKIP_UNSUPPORTED; then
+                    continue
+                fi
                 # Log unsupported file types
                 echo "$item" >> "$UNSUPPORTED_LOG"
                 cp "$item" "$dest/$filename"

@@ -6,10 +6,10 @@ include:
 
 services:
   nginx:
-    image: nginx:1.26.0-alpine
+    image: nginx:1.27.3-alpine
     container_name: nginx
     restart: always
-    networks: 
+    networks:
       - intranet
     depends_on:
       - nextcloud

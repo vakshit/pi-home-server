@@ -3,7 +3,6 @@ name: server
 include:
   - path: ../../core/network.yaml
 
-
 services:
   jellyfin:
     image: jellyfin/jellyfin:10.9.3

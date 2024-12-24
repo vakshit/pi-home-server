@@ -1,8 +1,7 @@
 ---
 - name: Setup Ubuntu Server
   hosts:
-    # - pi5
-    - pi4-1
+    - pi5
   become: true
 
   tasks:

@@ -3,7 +3,6 @@ name: server
 include:
   - path: ../../core/network.yaml
 
-
 services:
   nextcloud-mariadb:
     image: mariadb:11.4.1-rc

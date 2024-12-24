@@ -17,3 +17,4 @@ cron/immich-album-creator/.env
 cron/backups/*.json
 cron/backups/*.env
 **/*.log
+**/logs

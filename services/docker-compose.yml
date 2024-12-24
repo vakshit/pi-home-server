@@ -6,4 +6,3 @@ include:
   - path: immich/docker-compose.yml       # 5002
   - path: jellyfin/docker-compose.yml     # 5004
   - path: pvt-immich/docker-compose.yml   # 6000
-  
