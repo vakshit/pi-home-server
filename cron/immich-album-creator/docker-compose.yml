@@ -3,7 +3,6 @@ name: server
 include:
   - path: ../../core/network.yaml
   - path: ../../services/immich/docker-compose.yml
-  - path: ../../services/pvt-immich/docker-compose.yml
 
 services:
   immich-album-creator-akshit-album:
@@ -68,7 +67,7 @@ services:
       SYNC_MODE: 2
       SET_ALBUM_THUMBNAIL: random
     entrypoint: /script/immich_auto_album.sh
-  
+
   immich-album-creator-akshit-pvt-album:
     image: salvoxia/immich-folder-album-creator:latest
     container_name: immich-album-creator-akshit-pvt-album

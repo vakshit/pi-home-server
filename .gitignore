@@ -2,6 +2,7 @@
 
 ansible/password
 .vscode
+.ropeproject
 
 # Services
 services/immich/library
