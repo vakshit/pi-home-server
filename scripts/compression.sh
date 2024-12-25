@@ -1,8 +1,14 @@
 #!/bin/bash
 
-# Define source and destination directories
-SRC_DIR="$(echo $HOME)/Desktop/server/jellyfin"
-DEST_DIR="$(echo $HOME)/Desktop/server/jellyfin-avif"
+# Default options
+SRC_DIR=""
+DEST_DIR=""
+SKIP_IMAGES=false
+SKIP_VIDEOS=false
+SKIP_LEGACY_VIDEOS=false
+SKIP_UNSUPPORTED=false
+
+# Log file paths
 UNSUPPORTED_LOG="logs/unsupported_files.log"
 FFMPEG_ERROR_LOG="logs/ffmpeg_errors.log"
 AVIFENC_ERROR_LOG="logs/avifenc_errors.log"
@@ -10,7 +16,7 @@ AVIFENC_EXISTING_LOG="logs/avifenc_existing.log"
 FFMPEG_EXISTING_LOG="logs/ffmpeg_existing.log"
 HEVC_EXISTING_LOG="logs/hevc_existing.log"
 
-# create logs directory if it doesn't exist
+# Create logs directory if it doesn't exist
 mkdir -p logs
 
 # Clear previous logs
@@ -21,15 +27,28 @@ mkdir -p logs
 > "$FFMPEG_EXISTING_LOG"
 > "$HEVC_EXISTING_LOG"
 
-# Default options
-SKIP_IMAGES=false
-SKIP_VIDEOS=false
-SKIP_LEGACY_VIDEOS=false
-SKIP_UNSUPPORTED=false
+# Function to display usage
+usage() {
+    echo "Usage: $0 --src <source_directory> --dest <destination_directory> [options]"
+    echo "Options:"
+    echo "  --skip-images           Skip processing image files"
+    echo "  --skip-videos           Skip processing video files"
+    echo "  --skip-legacy-videos    Skip processing legacy video files"
+    echo "  --skip-unsupported      Skip logging unsupported files"
+    exit 1
+}
 
 # Parse command-line arguments
 while [[ $# -gt 0 ]]; do
     case "$1" in
+        --src)
+            SRC_DIR="$2"
+            shift 2
+            ;;
+        --dest)
+            DEST_DIR="$2"
+            shift 2
+            ;;
         --skip-images)
             SKIP_IMAGES=true
             shift
@@ -48,10 +67,24 @@ while [[ $# -gt 0 ]]; do
             ;;
         *)
             echo "Unknown option: $1"
-            exit 1
+            usage
             ;;
     esac
 done
+
+# Validate required arguments
+if [[ -z "$SRC_DIR" || -z "$DEST_DIR" ]]; then
+    echo "Error: Source and destination directories are required."
+    usage
+fi
+
+# Debugging output
+echo "Source Directory: $SRC_DIR"
+echo "Destination Directory: $DEST_DIR"
+echo "Skip Images: $SKIP_IMAGES"
+echo "Skip Videos: $SKIP_VIDEOS"
+echo "Skip Legacy Videos: $SKIP_LEGACY_VIDEOS"
+echo "Skip Unsupported: $SKIP_UNSUPPORTED"
 
 # Check if the destination directory exists, if not create it
 if [ ! -d "$DEST_DIR" ]; then
