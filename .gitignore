@@ -1,3 +1,5 @@
+**/.DS_Store
+
 **/credentials.env
 
 ansible/password
@@ -8,6 +10,9 @@ ansible/password
 services/immich/library
 services/immich/postgres
 
+# immich config
+services/immich/*.json
+
 # Core
 core/cloudflared/.env
 core/netdata/.env
@@ -17,5 +22,7 @@ core/netdata/.env
 cron/immich-album-creator/.env
 cron/backups/*.json
 cron/backups/*.env
+
+# logs
 **/*.log
 **/logs

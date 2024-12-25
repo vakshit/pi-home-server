@@ -147,7 +147,7 @@ process_files() {
                         echo "$item" >> "$HEVC_EXISTING_LOG"
                         cp "$item" "$hevc_file"
                     else
-                        if ! ffmpeg -i "$item" -c:v libx265 -preset slow -crf 28 -c:a copy "$hevc_file"; then
+                        if ! ffmpeg -i "$item" -c:v libx265 -preset slow -crf 28 -c:a copy -map_metadata 0 -movflags use_metadata_tags "$hevc_file"; then
                             echo "$item" >> "$FFMPEG_ERROR_LOG"
                         fi
                     fi
@@ -161,7 +161,7 @@ process_files() {
                 if [[ -f "$hevc_file" ]] ; then
                     echo "$item" >> "$FFMPEG_EXISTING_LOG"
                 else
-                    if ! ffmpeg -i "$item" -c:v libx265 -preset medium -crf 28 -c:a aac -b:a 128k "$hevc_file"; then
+                    if ! ffmpeg -i "$item" -c:v libx265 -preset medium -crf 28 -c:a aac -b:a 128k -map_metadata 0 -movflags use_metadata_tags "$hevc_file"; then
                         echo "$item" >> "$FFMPEG_ERROR_LOG"
                     fi
                 fi

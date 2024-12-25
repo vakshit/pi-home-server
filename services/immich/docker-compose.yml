@@ -49,7 +49,7 @@ services:
       # Upload Path
       - ${PVT_UPLOAD_LOCATION}:/usr/src/app/upload
       # Album Path
-      - ${PVT_ALBUM_PATH}:/usr/src/app/external/albums
+      - ${PVT_ALBUM_PATH}:/usr/src/app/external/vault
     ports:
       - 2200:2283
     depends_on:

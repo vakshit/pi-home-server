@@ -5,7 +5,7 @@ include:
 
 services:
   jellyfin:
-    image: jellyfin/jellyfin:10.9.3
+    image: jellyfin/jellyfin:10
     container_name: jellyfin
     user: 1000:1003
     volumes:
