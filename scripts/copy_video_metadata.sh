@@ -37,6 +37,25 @@ find "$ENCODED_ROOT" -type f -name "*.mp4" | while read -r encoded_file; do
         echo "Found original for $relative_path: $original_file"
         # Copy metadata from the original to the encoded file
         exiftool -tagsFromFile "$original_file" -overwrite_original "$encoded_file"
+
+        # Check MediaCreateDate and MediaModifyDate in the encoded file
+        create_date=$(exiftool -CreateDate "$encoded_file" | awk -F': ' '{print $2}' || true)
+        modify_date=$(exiftool -ModifyDate "$encoded_file" | awk -F': ' '{print $2}' || true)
+        file_modify_date=$(exiftool -ModifyDate "$encoded_file" | awk -F': ' '{print $2}' || true)
+
+        # Update CreateDate && ModifyDate if it's missing or invalid
+        if [[ -z "$create_date" || "$create_date" == "0000:00:00 00:00:00" ]]; then
+            echo "Updating CreateDate for: $encoded_file"
+            exiftool \
+                '-CreateDate<FileModifyDate' \
+                '-ModifyDate<FileModifyDate' \
+                "$encoded_file" || echo "Failed to update MediaCreateDate for $encoded_file" >> "$LOG_FILE"
+        fi
+
+        # Restore the original modification date of the encoded file
+        exiftool \
+            "-FileModifyDate=$file_modify_date" \
+            "$encoded_file" -overwrite_original_in_place
     else
         echo "Original file not found for $relative_path" | tee -a "$LOG_FILE"
     fi
