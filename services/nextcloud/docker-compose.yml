@@ -4,6 +4,27 @@ include:
   - path: ../../core/network.yaml
 
 services:
+  nextcloud:
+    image: nextcloud:30.0-fpm
+    container_name: nextcloud
+    depends_on:
+      - nextcloud-redis
+      - nextcloud-mariadb
+    networks:
+      - intranet
+    restart: always
+    volumes:
+      - ${HTML_LOCATION}:/var/www/html:z
+      - ${DATA_LOCATION}:/var/www/html/data:z
+    env_file:
+      - .env
+    environment:
+      REDIS_HOST: nextcloud-redis
+      MYSQL_HOST: nextcloud-mariadb
+      MYSQL_DATABASE: ${MARIADB_DATABASE}
+      MYSQL_USER: ${MARIADB_USER}
+      MYSQL_PASSWORD: ${MARIADB_PASSWORD}
+
   nextcloud-mariadb:
     image: mariadb:11.4.1-rc
     container_name: nextcloud-mariadb
@@ -24,20 +45,3 @@ services:
     networks:
       - intranet
 
-  nextcloud:
-    image: nextcloud:29.0.0-fpm
-    container_name: nextcloud
-    depends_on:
-      - nextcloud-redis
-      - nextcloud-mariadb
-    networks:
-      - intranet
-    restart: always
-    environment:
-      - VIRTUAL_HOST=nextcloud.pi4.local
-      - VIRTUAL_PORT=80
-    volumes:
-      - ${HTML_LOCATION}:/var/www/html:z
-      - ${DATA_LOCATION}:/var/www/html/data:z
-    env_file:
-      - .env
