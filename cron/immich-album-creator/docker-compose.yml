@@ -3,7 +3,6 @@ name: server
 include:
   - path: ../../core/network.yaml
   - path: ../../services/immich/docker-compose.yml
-  - path: ../../services/pvt-immich/docker-compose.yml
 
 services:
   immich-album-creator-akshit-album:
