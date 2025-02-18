@@ -14,16 +14,16 @@ sync_immich_data:
 	rsync -avztu --progress --delete --no-perms --no-owner --no-group /media/akshit/seagate/app-data/immich/ /media/akshit/onetouch/app-data/immich/
 
 vault_backward_sync:
-	rsync -avztu --progress --delete --no-perms --no-owner --no-group /media/akshit/seagate/vault/ /media/akshit/onetouch/vault/ --dry-run
+	rsync -avztu --progress --exclude="*.xmp" --exclude="*.CR3" --exclude="Aditi Google" --exclude="excluded" --no-perms --no-owner --no-group /media/akshit/seagate/vault/ /media/akshit/onetouch/vault/
 
 vault_forward_sync:
-	rsync -avztu --progress --delete /media/akshit/onetouch/vault/ /media/akshit/seagate/vault/ --dry-run
+	rsync -avztu --progress --exclude="*.xmp" --exclude="*.CR3" --exclude="Aditi Google" --exclude="excluded" --delete /media/akshit/onetouch/vault/ /media/akshit/seagate/vault/ --dry-run
 
 albums_forward_sync:
 	rsync -avztu --progress --delete --exclude="*.CR3" /media/akshit/onetouch/Immich/Albums/ /media/akshit/seagate/Immich/Albums/ --dry-run
 
 albums_backward_sync:
-	rsync -avztu --progress --delete --exclude="*.CR3" /media/akshit/seagate/Immich/Albums/ /media/akshit/onetouch/Immich/Albums/ --dry-run
+	rsync -avztu --progress --delete --exclude="*.xmp" --exclude="*.CR3" /media/akshit/seagate/Immich/Albums/ /media/akshit/onetouch/Immich/Albums/ --dry-run
 
 cameras_forward_sync:
 	rsync -avztu --progress --delete --exclude="*.CR3" /media/akshit/onetouch/Immich/Cameras/ /media/akshit/seagate/Immich/Cameras/ --dry-run
