@@ -61,7 +61,7 @@ services:
 
   pvt-immich-database:
     container_name: pvt_immich_postgres
-    image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0
+    image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:739cdd626151ff1f796dc95a6591b55a714f341c737e27f045019ceabf8e8c52
     environment:
       POSTGRES_PASSWORD: ${PVT_DB_PASSWORD}
       POSTGRES_USER: ${PVT_DB_USERNAME}
@@ -114,14 +114,14 @@ services:
     container_name: immich_redis
     networks:
       - intranet
-    image: docker.io/redis:6.2-alpine@sha256:905c4ee67b8e0aa955331960d2aa745781e6bd89afc44a8584bfd13bc890f0ae
+    image: valkey/valkey:8-bookworm@sha256:42cba146593a5ea9a622002c1b7cba5da7be248650cbb64ecb9c6c33d29794b1
     healthcheck:
       test: redis-cli ping || exit 1
     restart: always
 
   immich-database:
     container_name: immich_postgres
-    image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0
+    image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:739cdd626151ff1f796dc95a6591b55a714f341c737e27f045019ceabf8e8c52
     environment:
       POSTGRES_PASSWORD: ${HOME_DB_PASSWORD}
       POSTGRES_USER: ${HOME_DB_USERNAME}
