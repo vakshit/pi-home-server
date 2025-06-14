@@ -1,4 +1,5 @@
 **/credentials.env
+**/prometheus-agent.yaml
 
 ansible/password
 .vscode

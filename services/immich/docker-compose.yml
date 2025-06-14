@@ -114,5 +114,18 @@ services:
     networks:
       - intranet
     restart: always
+
+  prometheus-agent:
+    image: prom/prometheus:v3.4.1
+    container_name: prometheus-agent
+    volumes:
+      - ./prometheus-agent.yaml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--enable-feature=agent"
+    restart: unless-stopped
+    networks:
+      - intranet
+  
 volumes:
   model-cache:
