@@ -38,7 +38,7 @@ def upload_to_drive(service, file_path, folder_id):
             fileId=file_id,
             media_body=media
         ).execute()
-        # print(f"File {file_path} updated on Google Drive with file ID: {updated_file.get('id')}")
+        print(f"File {file_path} updated on Google Drive with file ID: {updated_file.get('id')}")
     else:
         # print(f"Uploading new file {file_name}.")
         new_file = service.files().create(
@@ -46,7 +46,7 @@ def upload_to_drive(service, file_path, folder_id):
             media_body=media,
             fields='id'
         ).execute()
-        # print(f"File {file_path} uploaded to Google Drive with file ID: {new_file.get('id')}")
+        print(f"File {file_path} uploaded to Google Drive with file ID: {new_file.get('id')}")
 
 if __name__ == '__main__':
     # Initialize the Google Drive service
