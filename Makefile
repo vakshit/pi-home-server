@@ -44,3 +44,9 @@ cameras_forward_sync:
 
 cameras_backward_sync:
 	rsync -avztu --progress --no-perms --no-owner --no-group --delete --exclude="*.xmp" --exclude="*.CR3" /media/akshit/seagate/Immich/Cameras/ /media/akshit/onetouch/Immich/Cameras/ --dry-run
+
+akshit_albums_forward_sync:
+	rsync -avztu --progress --no-perms --no-owner --no-group --delete --exclude="*.xmp" --exclude="*.CR3" /media/akshit/onetouch/Immich/Albums_Akshit/ /media/akshit/seagate/Immich/Albums_Akshit/ --dry-run
+
+akshit_albums_backward_sync:
+	rsync -avztu --progress --no-perms --no-owner --no-group --delete --exclude="*.xmp" --exclude="*.CR3" /media/akshit/seagate/Immich/Albums_Akshit/ /media/akshit/onetouch/Immich/Albums_Akshit/ --dry-run
