@@ -19,3 +19,4 @@ cron/backups/*.json
 cron/backups/*.env
 **/*.log
 **/logs
+data/**

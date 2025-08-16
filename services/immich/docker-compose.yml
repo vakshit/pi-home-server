@@ -91,6 +91,7 @@ services:
     restart: always
     healthcheck:
       disable: false
+    oom_score_adj: 1000
 
   immich-redis:
     container_name: immich_redis
