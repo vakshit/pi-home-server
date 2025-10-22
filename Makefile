@@ -1,11 +1,11 @@
 update-immich-version:
 	docker compose pull
 	docker compose -f ${HOME}/pi-home-server/services/immich/docker-compose.yml up --force-recreate -d
-	sleep 1
+	sleep 20
 	docker system prune -af
-	sleep 1
+	sleep 10
 	docker compose -f ${HOME}/pi-home-server/cron/docker-compose.yml create immich-album-creator-akshit-album immich-album-creator-home-album immich-album-creator-akshit-pvt-album immich-album-creator-jiya-album
-	sleep 1
+	sleep 10
 	docker compose -f ${HOME}/pi-home-server/docker-compose.yml restart nginx
 
 create-albums:
@@ -19,7 +19,7 @@ sync_immich_data:
 
 vault_backward_sync:
 	rsync -avztu --progress \
-	--exclude="*.xmp" --exclude="*.mp4" --exclude="*m4a" --exclude="*.txt" --exclude="*.CR3" --exclude="Aditi Google" --exclude="excluded" \
+	--exclude="*.xmp" --exclude="*.mp3" --exclude="*m4a" --exclude="*.txt" --exclude="*.CR3" --exclude="Aditi Google" --exclude="excluded" \
 	--no-perms --no-owner --no-group \
 	--delete \
 	/media/akshit/seagate/vault/ /media/akshit/onetouch/vault/ \
@@ -27,7 +27,7 @@ vault_backward_sync:
 
 vault_forward_sync:
 	rsync -avztu --progress \
-	--exclude="*.xmp" --exclude="*.mp4" --exclude="*m4a" --exclude="*.txt" --exclude="*.CR3" --exclude="Aditi Google" --exclude="excluded" \
+	--exclude="*.xmp" --exclude="*.mp3" --exclude="*m4a" --exclude="*.txt" --exclude="*.CR3" --exclude="Aditi Google" --exclude="excluded" \
 	--no-perms --no-owner --no-group \
 	--delete \
 	/media/akshit/onetouch/vault/ /media/akshit/seagate/vault/ \
